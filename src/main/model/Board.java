@@ -1,9 +1,8 @@
 package model;
 
-import ui.Main;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class Board {
     // The boolean to decide whether it needs more movements before the final graph.
@@ -11,6 +10,12 @@ public class Board {
 
     // The temporary arraylist to save the Num for fixation after merging.
     private static ArrayList<Num> fixed;
+
+    private static ArrayList<Integer> scoreList = new ArrayList<>();
+
+    @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:SuppressWarnings"})
+    public static ScoreBoard scoreBoard = new ScoreBoard();
+
 
     // EFFECT: print out the visible graph of the board on the console.
     public static void printBoard(Num[][] board) {
@@ -23,14 +28,18 @@ public class Board {
         }
     }
 
+
     // EFFECT: if two numbers are the same
     //          - instantiate a Num(0) at the front of the arraylist
     //          - add two Num's value and make it a Num after Num(0)
     //          otherwise, create an arraylist and put this two Num in original serial.
     public static ArrayList<Num> merge(Num a, Num b) {
-        if (a.value != b.value) {
+        if (Math.abs(b.value - a.value) > 1) {
             return new ArrayList<Num>(Arrays.asList(a, b));
         } else {
+            if (a.value != 0) {
+                scoreBoard.addScore(a.value);
+            }
             return new ArrayList<Num>(Arrays.asList(new Num(0), new Num(a.value * 2)));
         }
     }
@@ -40,9 +49,12 @@ public class Board {
     //          - add two Num's value and make it a Num after Num(0)
     //          otherwise, create an arraylist and put this two Num in reversed serial.
     public static ArrayList<Num> revMerge(Num a, Num b) {
-        if (a.value != b.value) {
+        if (Math.abs(b.value - a.value) > 1) {
             return new ArrayList<Num>(Arrays.asList(b, a));
         } else {
+            if (a.value != 0) {
+                scoreBoard.addScore(a.value);
+            }
             return new ArrayList<Num>(Arrays.asList(new Num(0), new Num(a.value * 2)));
         }
     }
@@ -179,7 +191,6 @@ public class Board {
         }
         return nn;
     }
-
 
 }
 

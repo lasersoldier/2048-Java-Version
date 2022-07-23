@@ -11,4 +11,4 @@ to try making a basic game with the code I learned.
 - As a user, I want numbers to be multiplied and merged when two same numbers meet.
 - As a user, I want the game to end when there is no more actions I can operate.
 - As a user, I want it to generate 2 or 4 every round randomly.
-- As a user, I want to see how many blocks I successfully merged during the game.
+- As a user, I want to see how many number blocks I successfully merged during the game.

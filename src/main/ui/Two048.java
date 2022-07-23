@@ -4,7 +4,6 @@ import model.Num;
 import model.Board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Two048 {
@@ -34,6 +33,9 @@ public class Two048 {
     private static Num[][] backUp5 = new Num[4][4];
     private static Num[][] backUp6 = new Num[4][4];
 
+    // Create a list to save user's score
+
+
     // ui start interface
     public Two048() {
         System.out.println("Welcome to 2048 Java Version.");
@@ -43,12 +45,16 @@ public class Two048 {
             generateNew();
             generateNext(playBoard);
             Board.printBoard(playBoard);
+
             while (!gameOver) {
                 System.out.println("Press 'wasd' to move your board in the direction you want.");
                 operation(playBoard);
                 Board.printBoard(playBoard);
+
             }
             System.out.println("You lose!");
+            System.out.println("Your score:");
+            Board.scoreBoard.printScoreBoard();
         }
 
     }
@@ -155,3 +161,4 @@ public class Two048 {
         }
     }
 }
+
