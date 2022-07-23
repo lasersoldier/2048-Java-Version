@@ -13,6 +13,7 @@ public class Board {
 
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
+    // I'm using SuppressWarnings because the scoreBoard must be used outside the class of Board
     @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:SuppressWarnings"})
     public static ScoreBoard scoreBoard = new ScoreBoard();
 

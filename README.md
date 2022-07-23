@@ -10,5 +10,12 @@ to try making a basic game with the code I learned.
 - As a user, I want to move all numbers on the board as I expected.
 - As a user, I want numbers to be multiplied and merged when two same numbers meet.
 - As a user, I want the game to end when there is no more actions I can operate.
-- As a user, I want it to generate 2 or 4 every round randomly.
+- As a user, I expect that I would receive a warning when the numbers can't be moved in a specific direction.
+- As a user, I want it to generate 2 or 4 every round randomly when there are spaces left.
 - As a user, I want to see how many number blocks I successfully merged during the game.
+
+### Adding multiple Xs to a Y
+In my application, the realization of multiple Xs to a Y happens when the user is playing the game, multiple blocks that
+In my application, the realization of multiple Xs to a Y happens when the user is playing the game, multiple blocks that
+the user successfully merged will be added to a list where each element in Y correspond to the number of different
+blocks.
