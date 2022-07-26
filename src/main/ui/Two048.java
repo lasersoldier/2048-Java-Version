@@ -1,12 +1,23 @@
 package ui;
 
+import jdk.nashorn.internal.parser.JSONParser;
 import model.Num;
 import model.Board;
 
-import java.util.ArrayList;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONWriter;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 public class Two048 {
+    private static final String JSON_STORE = "./data/two048.json";
     // The boolean to decide if the game is over
     private static Boolean gameOver;
 
@@ -34,34 +45,24 @@ public class Two048 {
     private static Num[][] backUp6 = new Num[4][4];
 
     // Create a list to save user's score
-
+    private static JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
 
     // ui start interface
-    public Two048() {
+    public Two048() throws Exception {
         System.out.println("Welcome to 2048 Java Version.");
         System.out.println("Press 'b' to start the game.");
         start = scanner.next();
         if (start.equals("b")) {
-            generateNew();
-            generateNext(playBoard);
-            Board.printBoard(playBoard);
-
-            while (!gameOver) {
-                System.out.println("Press 'wasd' to move your board in the direction you want.");
-                operation(playBoard);
-                Board.printBoard(playBoard);
-
-            }
-            System.out.println("You lose!");
-            System.out.println("Your score:");
-            Board.scoreBoard.printScoreBoard();
+            startGame();
+        } else if (start.equals("l")) {
+            resumeGame(playBoard);
         }
 
     }
 
 
     // Generate a new game board
-    public static Num[][] generateNew() {
+    public Num[][] generateNew() {
         gameOver = false;
         return playBoard = new Num[][]{
                 {new Num(0), new Num(0), new Num(0), new Num(0)},
@@ -72,7 +73,7 @@ public class Two048 {
     }
 
     // Generate a random 2 or 4 on game board before player's next move
-    public static Num[][] generateNext(Num[][] mm) {
+    public Num[][] generateNext(Num[][] mm) {
         int xdirection = (int) (Math.random() * 4);
         int ydirection = (int) (Math.random() * 4);
         int randomValue = (1 + (int) (Math.random() * 2)) * 2;
@@ -90,7 +91,7 @@ public class Two048 {
     }
 
     // Check if there is space to generate new random number
-    public static void checkStatus(Num[][] mm) {
+    public void checkStatus(Num[][] mm) {
         nonZero = true;
         for (Num[] m : mm) {
             for (Num n : m) {
@@ -104,10 +105,13 @@ public class Two048 {
     // Move the board according to the user input
     // If it's not movable, warn the user with "Ineffective movement"
     // Otherwise output the board after user's movement
-    public static Num[][] operation(Num[][] mm) {
+    public Num[][] operation(Num[][] mm) throws Exception {
         op = scanner.next();
         setBackUps(mm);
-        if (op.equals("w") && !arraysCompare(Board.actUp(backUp), backUp2)) {
+        if (op.equals("m")) {
+            saveTwo048();
+            return mm;
+        } else if (op.equals("w") && !arraysCompare(Board.actUp(backUp), backUp2)) {
             Board.actUp(mm);
         } else if (op.equals("s") && !arraysCompare(Board.actDown(backUp), backUp2)) {
             Board.actDown(mm);
@@ -129,7 +133,7 @@ public class Two048 {
     }
 
     // Check if two board are the same
-    public static boolean arraysCompare(Num[][] mm1, Num[][] mm2) {
+    public boolean arraysCompare(Num[][] mm1, Num[][] mm2) {
         boolean result = false;
         for (int i = 0; i < 4; i++) {
             for (int k = 0; k < 4; k++) {
@@ -144,7 +148,7 @@ public class Two048 {
     }
 
     // Create 6 backups for the game board
-    public static void setBackUps(Num[][] mm) {
+    public void setBackUps(Num[][] mm) {
         for (int i = 0; i < 4; i++) {
             backUp[i] = new Num[4];
             backUp2[i] = new Num[4];
@@ -158,6 +162,101 @@ public class Two048 {
             System.arraycopy(mm[i], 0, backUp4[i], 0, backUp.length);
             System.arraycopy(mm[i], 0, backUp5[i], 0, backUp.length);
             System.arraycopy(mm[i], 0, backUp6[i], 0, backUp.length);
+        }
+    }
+
+    /*public static void jsonWrite() throws Exception {
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("exampleWrite.json"),
+                "UTF-8");
+        JSONObject jsonObject = new JSONObject();
+        Integer serial = 11;
+        for (Num[] l : playBoard) {
+            for (Num n : l) {
+                JSONObject subObject = new JSONObject();
+                subObject.put("serial", serial);
+                subObject.put("value", n.value);
+                jsonObject.accumulate("BOARD", subObject);
+                serial++;
+            }
+            serial += 6;
+        }
+
+        System.out.println(jsonObject.toString());
+        osw.write(jsonObject.toString());
+        osw.flush();
+        osw.close();
+    }*/
+
+    public void jsonParser() throws Exception {
+        JSONArray arr = JsonReader.read();
+        System.out.println(arr.toString());
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject object = arr.getJSONObject(i);
+            Integer xAxisString = Integer.parseInt(object.get("serial").toString().substring(0, 1)) - 1;
+            Integer yAxisString = Integer.parseInt(object.get("serial").toString().substring(1, 2)) - 1;
+            Integer value = Integer.parseInt((object.get("value").toString()));
+            playBoard[xAxisString][yAxisString] = new Num(value);
+        }
+    }
+
+    public void startGame() throws Exception {
+        generateNew();
+        generateNext(playBoard);
+        Board.printBoard(playBoard);
+
+        while (!gameOver) {
+            System.out.println("Press 'wasd' to move your board in the direction you want.");
+            operation(playBoard);
+            Board.printBoard(playBoard);
+
+        }
+        System.out.println("You lose!");
+        System.out.println("Your score:");
+        Board.scoreBoard.printScoreBoard();
+    }
+
+    public void resumeGame(Num[][] board) throws Exception {
+        generateNew();
+        jsonParser();
+        Board.printBoard(playBoard);
+
+        while (!gameOver) {
+            System.out.println("Press 'wasd' to move your board in the direction you want.");
+            operation(playBoard);
+            Board.printBoard(playBoard);
+
+        }
+        System.out.println("You lose!");
+        System.out.println("Your score:");
+        Board.scoreBoard.printScoreBoard();
+    }
+
+    public JSONObject toJson() {
+        Num[][] board = Two048.playBoard;
+        JSONObject jsonObject = new JSONObject();
+        Integer serial = 11;
+        for (Num[] l : board) {
+            for (Num n : l) {
+                JSONObject subObject = new JSONObject();
+                subObject.put("serial", serial);
+                subObject.put("value", n.value);
+                jsonObject.accumulate("BOARD", subObject);
+                serial++;
+            }
+            serial += 6;
+        }
+        return jsonObject;
+    }
+
+
+    public void saveTwo048() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 }
