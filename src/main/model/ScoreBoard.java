@@ -3,7 +3,9 @@ package model;
 import java.util.ArrayList;
 
 public class ScoreBoard {
-    ArrayList<Integer> scoreList;
+    // I'm using suppress warnings because I want the other method to change the list directly
+    @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:SuppressWarnings"})
+    public ArrayList<Integer> scoreList;
 
     // Create a scoreBoard which contains the counting list of each number the user merges
     public ScoreBoard() {
@@ -30,5 +32,9 @@ public class ScoreBoard {
             }
             count++;
         }
+    }
+
+    public ArrayList getScoreList() {
+        return scoreList;
     }
 }

@@ -1,16 +1,12 @@
 package persistence;
 
-import jdk.nashorn.internal.parser.JSONParser;
-import model.Num;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ui.Two048;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class JsonReader {
@@ -21,12 +17,20 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads 2048 board from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public static JSONArray read() throws Exception {
+    public static JSONArray readBoard() throws Exception {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseTwo048(jsonObject);
+    }
+
+    // EFFECTS: reads 2048 score list from file and returns it;
+    // throws IOException if an error occurs reading data from file
+    public static JSONArray readScore() throws Exception {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseScoreList(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -40,13 +44,19 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: parse 2048 board from JSON file and return it
     private static JSONArray parseTwo048(JSONObject jsonObject) {
-        ArrayList<String> string = new ArrayList<>();
         JSONArray jsonList = jsonObject.getJSONArray("BOARD");
         return jsonList;
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parse last game's score from JSON file and return it
+    private static JSONArray parseScoreList(JSONObject jsonObject) {
+        JSONArray jsonList = jsonObject.getJSONArray("SCORELIST");
+        return jsonList;
+    }
+
+
 
 }
 

@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,19 +15,30 @@ public class Board {
 
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
-    // I'm using SuppressWarnings because the scoreBoard must be used outside the class of Board
-    @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:SuppressWarnings"})
-    public static ScoreBoard scoreBoard = new ScoreBoard();
+    private static ScoreBoard scoreBoard = new ScoreBoard();
 
 
     // EFFECT: print out the visible graph of the board on the console.
     public static void printBoard(Num[][] board) {
         for (int n = 0; n <= 3; n++) {
             for (int k = 0; k <= 3; k++) {
-                System.out.print(board[n][k].value + "|");
+                Integer space = 5 - String.valueOf(board[n][k].value).length();
+                for (int s = space; s > 0; s--) {
+                    System.out.print(" ");
+                }
+                for (int l = String.valueOf(board[n][k].value).length() - 1; l > 0; l--) {
+                    System.out.print(" ");
+                }
+                System.out.print(board[n][k].value);
+                space = 5 - String.valueOf(board[n][k].value).length();
+                for (int s = space; s > 0; s--) {
+                    System.out.print(" ");
+                }
+                System.out.print("|");
+                //System.out.print(board[n][k].value + "|");
             }
             System.out.println("");
-            System.out.println("---------");
+            System.out.println("----------------------------------------");
         }
     }
 
@@ -193,6 +206,10 @@ public class Board {
         return nn;
     }
 
+    // EFFECT: Return the score board of this game.
+    public static ScoreBoard getScoreBoard() {
+        return scoreBoard;
+    }
 }
 
 

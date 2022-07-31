@@ -2,6 +2,7 @@ package model;
 
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class Two048Test {
@@ -30,6 +31,7 @@ class Two048Test {
     public void testPrintBoard()
     {
         Board.printBoard(TestBoard);
+        Board.printBoard(TestBoard4);
     }
 
     @Test
@@ -66,12 +68,13 @@ class Two048Test {
 
     @Test
     public void TestScoreBoard(){
+
         ScoreBoard scoreBoard = new ScoreBoard();
         scoreBoard.addScore(2);
         scoreBoard.addScore(4);
-        Assertions.assertEquals(1,scoreBoard.scoreList.get(2));
-        Assertions.assertEquals(1,scoreBoard.scoreList.get(3));
+        Assertions.assertEquals(1,scoreBoard.getScoreList().get(2));
+        Assertions.assertEquals(1,scoreBoard.getScoreList().get(3));
         scoreBoard.printScoreBoard();
-        //Assertions.assertEquals(1,);
+        Board.getScoreBoard().printScoreBoard();
     }
 }
