@@ -56,6 +56,9 @@ public class JsonReader {
         return jsonList;
     }
 
+    public static String getSource() {
+        return source;
+    }
 
 
 }
