@@ -46,6 +46,7 @@ public class Two048 {
 
     // ui start interface
     public Two048() throws Exception {
+        /*
         System.out.println("Welcome to 2048 Java Version.");
         System.out.println("Press 'b' to start the game.");
         System.out.println("Press 'l' to load your last saved game.");
@@ -55,7 +56,7 @@ public class Two048 {
         } else if (start.equals("l")) {
             resumeGame(playBoard);
         }
-
+        */
     }
 
 
@@ -88,6 +89,10 @@ public class Two048 {
         return mm;
     }
 
+    public Num[][] getPlayBoard() {
+        return playBoard;
+    }
+
     // Check if there is space to generate new random number
     public void checkStatus(Num[][] mm) {
         nonZero = true;
@@ -107,8 +112,8 @@ public class Two048 {
     // I'm using the suppress warnings because this part of the code is the core part for the user input.
     // It contains most cases to operate according to the user input.
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    private Num[][] operation(Num[][] mm) throws Exception {
-        op = scanner.next();
+    public Num[][] operation(Num[][] mm, String op) {
+        // op = scanner.next();
         setBackUps(mm);
         if (op.equals("m")) {
             saveTwo048();
@@ -183,7 +188,7 @@ public class Two048 {
         for (int i = 0; i < score.length(); i++) {
             JSONObject tempScore = score.getJSONObject(i);
             Integer temp = Integer.parseInt(tempScore.get("score").toString());
-            Board.getScoreBoard().scoreList.set(i,temp);
+            Board.getScoreBoard().scoreList.set(i, temp);
         }
 
     }
@@ -198,7 +203,7 @@ public class Two048 {
             System.out.println("Press 'wasd' to move your board in the direction you want.");
             System.out.println("Press 'm' to save your game");
             System.out.println("Press 'p' to quit the game");
-            operation(playBoard);
+            //operation(playBoard);
             Board.printBoard(playBoard);
 
         }
@@ -223,7 +228,7 @@ public class Two048 {
             System.out.println("Press 'wasd' to move your board in the direction you want.");
             System.out.println("Press 'm' to save your game");
             System.out.println("Press 'p' to quit the game");
-            operation(playBoard);
+            //operation(playBoard);
             Board.printBoard(playBoard);
 
         }
@@ -252,7 +257,7 @@ public class Two048 {
         for (Integer s : tempScoreList) {
             JSONObject score = new JSONObject();
             score.put("score", s);
-            jsonObject.accumulate("SCORELIST",score);
+            jsonObject.accumulate("SCORELIST", score);
         }
         return jsonObject;
     }

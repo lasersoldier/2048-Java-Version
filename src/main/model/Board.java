@@ -13,7 +13,6 @@ public class Board {
     // The temporary arraylist to save the Num for fixation after merging.
     private static ArrayList<Num> fixed;
 
-    private static ArrayList<Integer> scoreList = new ArrayList<>();
 
     private static ScoreBoard scoreBoard = new ScoreBoard();
 
