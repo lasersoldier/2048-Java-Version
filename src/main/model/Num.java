@@ -18,7 +18,7 @@ public class Num {
     private static int arcWidth = 4;
     private static int arcHeight = 4;
     private static int colWidth = 10;
-    private static Color numberColor = new Color(255, 68, 0, 255);
+    private static Color numberColor = new Color(255, 241, 233, 255);
     private static Font numberFont = new Font("Times New Roman", Font.BOLD, 36);
 
     public Num(int n) {

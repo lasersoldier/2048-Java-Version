@@ -15,6 +15,7 @@ public class Panel extends JPanel implements ActionListener {
     private Panel panel = null;
     private Two048 two048 = new Two048();
     private Num[][] board = two048.generateNext(two048.generateNew());
+    private boolean gameOver = false;
     Num[][] testBoard = new Num[][]{
             {new Num(2), new Num(16), new Num(32), new Num(128)},
             {new Num(1024), new Num(0), new Num(0), new Num(0)},
@@ -27,7 +28,9 @@ public class Panel extends JPanel implements ActionListener {
         this.setOpaque(false);
         this.frame = frame;
         this.panel = this;
+
         menu();
+        two048.setBackUps(board);
         createOperator();
     }
 
@@ -56,11 +59,15 @@ public class Panel extends JPanel implements ActionListener {
                         two048.operation(board,"d");
                         repaint();
                         break;
+                    case KeyEvent.VK_P:
+                        two048.operation(board,"p");
+                        repaint();
+                        break;
                 }
             }
         };
         frame.addKeyListener(keyAdapter);
-
+        gameOver = two048.noMoreMove();
     }
 
     private void menu() {
@@ -102,13 +109,18 @@ public class Panel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (command.equals("start")) {
-            System.out.println("start");
+            startGame();
         }
         if (command.equals("save")) {
-            System.out.println("save");
+            two048.saveTwo048();
         }
         if (command.equals("load")) {
-            System.out.println("load");
+            try {
+                two048.jsonParser();
+                repaint();
+            } catch (Exception ex) {
+                startGame();
+            }
         }
     }
 
@@ -125,5 +137,12 @@ public class Panel extends JPanel implements ActionListener {
                 n.draw(graphics, x, y);
             }
         }
+    }
+
+    public void startGame() {
+        two048.generateNew();
+        two048.generateNext(board);
+        board = two048.generateNext(two048.generateNew());
+        repaint();
     }
 }

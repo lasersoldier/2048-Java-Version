@@ -129,8 +129,7 @@ public class Two048 {
         } else if (op.equals("p")) {
             gameOver = true;
             return mm;
-        } else if (arraysCompare(Board.actUp(backUp3), Board.actDown(backUp5))
-                && arraysCompare(Board.actLeft(backUp4), Board.actRight(backUp6))) {
+        } else if (noMoreMove()) {
             gameOver = true;
         } else {
             System.out.println("Ineffective movement.");
@@ -272,6 +271,11 @@ public class Two048 {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
+    }
+
+    public boolean noMoreMove() {
+        return arraysCompare(Board.actUp(backUp3), Board.actDown(backUp5))
+                && arraysCompare(Board.actLeft(backUp4), Board.actRight(backUp6));
     }
 }
 
