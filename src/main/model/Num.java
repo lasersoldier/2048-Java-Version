@@ -109,7 +109,7 @@ public class Num {
                 color = new Color(162, 8, 8);
                 break;
             default:
-                color = new Color(134, 0, 0);
+                color = new Color(234, 140, 46);
         }
         return color;
     }

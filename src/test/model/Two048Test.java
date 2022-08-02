@@ -39,14 +39,14 @@ class Two048Test {
         Num num1 = new Num(2);
         Num num2 = new Num(2);
         Num num3 = new Num(4);
-        Assertions.assertEquals(0, b.merge(num1,num2).get(0).value);
-        Assertions.assertEquals(4, b.merge(num1,num2).get(1).value);
-        Assertions.assertEquals(0, b.revMerge(num1,num2).get(0).value);
-        Assertions.assertEquals(4, b.revMerge(num1,num2).get(1).value);
-        Assertions.assertEquals(2, b.merge(num1,num3).get(0).value);
-        Assertions.assertEquals(4, b.merge(num1,num3).get(1).value);
-        Assertions.assertEquals(4, b.revMerge(num1,num3).get(0).value);
-        Assertions.assertEquals(2, b.revMerge(num1,num3).get(1).value);
+        Assertions.assertEquals(0, b.merge(num1,num2,true).get(0).value);
+        Assertions.assertEquals(4, b.merge(num1,num2,true).get(1).value);
+        Assertions.assertEquals(0, b.revMerge(num1,num2,true).get(0).value);
+        Assertions.assertEquals(4, b.revMerge(num1,num2,true).get(1).value);
+        Assertions.assertEquals(2, b.merge(num1,num3,true).get(0).value);
+        Assertions.assertEquals(4, b.merge(num1,num3,true).get(1).value);
+        Assertions.assertEquals(4, b.revMerge(num1,num3,false).get(0).value);
+        Assertions.assertEquals(2, b.revMerge(num1,num3,false).get(1).value);
     }
 
     @Test
@@ -70,8 +70,8 @@ class Two048Test {
     public void TestScoreBoard(){
 
         ScoreBoard scoreBoard = new ScoreBoard();
-        scoreBoard.addScore(2);
-        scoreBoard.addScore(4);
+        scoreBoard.addScore(2,true);
+        scoreBoard.addScore(4,true);
         Assertions.assertEquals(1,scoreBoard.getScoreList().get(2));
         Assertions.assertEquals(1,scoreBoard.getScoreList().get(3));
         scoreBoard.printScoreBoard();

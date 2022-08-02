@@ -16,10 +16,14 @@ public class ScoreBoard {
     }
 
     // Add one count to the corresponding number user merges
-    public void addScore(int score) {
+    public void addScore(int score, boolean direction) {
         double var = Math.log(score * 2) / Math.log(2);
         int original = scoreList.get((int) var);
-        original += 1;
+        if (direction) {
+            original += 4;
+        } else {
+            original += 2;
+        }
         scoreList.set((int) var, original);
     }
 
@@ -36,5 +40,11 @@ public class ScoreBoard {
 
     public ArrayList getScoreList() {
         return scoreList;
+    }
+
+    public void setNewScoreList() {
+        for (int n = 0; n < scoreList.size(); n++) {
+            scoreList.set(n, 0);
+        }
     }
 }

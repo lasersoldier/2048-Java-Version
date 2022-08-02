@@ -46,12 +46,12 @@ public class Board {
     //          - instantiate a Num(0) at the front of the arraylist
     //          - add two Num's value and make it a Num after Num(0)
     //          otherwise, create an arraylist and put this two Num in original serial.
-    public static ArrayList<Num> merge(Num a, Num b) {
+    public static ArrayList<Num> merge(Num a, Num b,boolean direction) {
         if (Math.abs(b.value - a.value) > 1) {
             return new ArrayList<Num>(Arrays.asList(a, b));
         } else {
             if (a.value != 0) {
-                scoreBoard.addScore(a.value);
+                scoreBoard.addScore(a.value,direction);
             }
             return new ArrayList<Num>(Arrays.asList(new Num(0), new Num(a.value * 2)));
         }
@@ -61,12 +61,12 @@ public class Board {
     //          - instantiate a Num(0) at the front of the arraylist
     //          - add two Num's value and make it a Num after Num(0)
     //          otherwise, create an arraylist and put this two Num in reversed serial.
-    public static ArrayList<Num> revMerge(Num a, Num b) {
+    public static ArrayList<Num> revMerge(Num a, Num b,boolean direction) {
         if (Math.abs(b.value - a.value) > 1) {
             return new ArrayList<Num>(Arrays.asList(b, a));
         } else {
             if (a.value != 0) {
-                scoreBoard.addScore(a.value);
+                scoreBoard.addScore(a.value,direction);
             }
             return new ArrayList<Num>(Arrays.asList(new Num(0), new Num(a.value * 2)));
         }
@@ -150,7 +150,7 @@ public class Board {
         for (int k = 3; k >= 0; k--) {
             Num[][] fixed1 = moveLeft(k, nn);
             for (int p = 0; p <= 2; p++) {
-                fixed = revMerge(fixed1[k][p], fixed1[k][p + 1]);
+                fixed = revMerge(fixed1[k][p], fixed1[k][p + 1],true);
                 fixed1[k][p] = fixed.get(1);
                 fixed1[k][p + 1] = fixed.get(0);
             }
@@ -165,7 +165,7 @@ public class Board {
         for (int k = 3; k >= 0; k--) {
             Num[][] fixed1 = moveRight(k, nn);
             for (int p = 2; p >= 0; p--) {
-                fixed = merge(nn[k][p], nn[k][p + 1]);
+                fixed = merge(nn[k][p], nn[k][p + 1],true);
                 nn[k][p] = fixed.get(0);
                 nn[k][p + 1] = fixed.get(1);
             }
@@ -180,7 +180,7 @@ public class Board {
         for (int k = 3; k >= 0; k--) {
             Num[][] fixed1 = moveUp(k, nn);
             for (int p = 0; p <= 2; p++) {
-                fixed = revMerge(nn[p][k], nn[p + 1][k]);
+                fixed = revMerge(nn[p][k], nn[p + 1][k],false);
                 nn[p + 1][k] = fixed.get(0);
                 nn[p][k] = fixed.get(1);
             }
@@ -195,7 +195,7 @@ public class Board {
         for (int k = 3; k >= 0; k--) {
             Num[][] fixed1 = moveDown(k, nn);
             for (int p = 2; p >= 0; p--) {
-                fixed = merge(nn[p][k], nn[p + 1][k]);
+                fixed = merge(nn[p][k], nn[p + 1][k],false);
                 nn[p][k] = fixed.get(0);
                 nn[p + 1][k] = fixed.get(1);
             }
