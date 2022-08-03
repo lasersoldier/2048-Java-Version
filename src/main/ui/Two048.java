@@ -34,7 +34,7 @@ public class Two048 {
     private static Boolean nonZero = false;
 
     // Backup board to test if the game is over of if it's movable on one direction
-    private static Num[][] backUp = new Num[4][4];
+    private static Num[][] backUp1 = new Num[4][4];
     private static Num[][] backUp2 = new Num[4][4];
     private static Num[][] backUp3 = new Num[4][4];
     private static Num[][] backUp4 = new Num[4][4];
@@ -118,14 +118,14 @@ public class Two048 {
         if (op.equals("m")) {
             saveTwo048();
             return mm;
-        } else if (op.equals("w") && !arraysCompare(Board.actUp(backUp), backUp2)) {
-            Board.actUp(mm);
-        } else if (op.equals("s") && !arraysCompare(Board.actDown(backUp), backUp2)) {
-            Board.actDown(mm);
-        } else if (op.equals("a") && !arraysCompare(Board.actLeft(backUp), backUp2)) {
-            Board.actLeft(mm);
-        } else if (op.equals("d") && !arraysCompare(Board.actRight(backUp), backUp2)) {
-            Board.actRight(mm);
+        } else if (op.equals("w") && !arraysCompare(Board.actUp(backUp1,true), backUp2)) {
+            Board.actUp(mm,false);
+        } else if (op.equals("s") && !arraysCompare(Board.actDown(backUp1,true), backUp2)) {
+            Board.actDown(mm,false);
+        } else if (op.equals("a") && !arraysCompare(Board.actLeft(backUp1,true), backUp2)) {
+            Board.actLeft(mm,false);
+        } else if (op.equals("d") && !arraysCompare(Board.actRight(backUp1,true), backUp2)) {
+            Board.actRight(mm,false);
         } else if (op.equals("p")) {
             gameOver = true;
             return mm;
@@ -158,18 +158,18 @@ public class Two048 {
     // Create 6 backups for the game board
     public void setBackUps(Num[][] mm) {
         for (int i = 0; i < 4; i++) {
-            backUp[i] = new Num[4];
+            backUp1[i] = new Num[4];
             backUp2[i] = new Num[4];
             backUp3[i] = new Num[4];
             backUp4[i] = new Num[4];
             backUp5[i] = new Num[4];
             backUp6[i] = new Num[4];
-            System.arraycopy(mm[i], 0, backUp[i], 0, backUp.length);
-            System.arraycopy(mm[i], 0, backUp2[i], 0, backUp.length);
-            System.arraycopy(mm[i], 0, backUp3[i], 0, backUp.length);
-            System.arraycopy(mm[i], 0, backUp4[i], 0, backUp.length);
-            System.arraycopy(mm[i], 0, backUp5[i], 0, backUp.length);
-            System.arraycopy(mm[i], 0, backUp6[i], 0, backUp.length);
+            System.arraycopy(mm[i], 0, backUp1[i], 0, backUp1.length);
+            System.arraycopy(mm[i], 0, backUp2[i], 0, backUp1.length);
+            System.arraycopy(mm[i], 0, backUp3[i], 0, backUp1.length);
+            System.arraycopy(mm[i], 0, backUp4[i], 0, backUp1.length);
+            System.arraycopy(mm[i], 0, backUp5[i], 0, backUp1.length);
+            System.arraycopy(mm[i], 0, backUp6[i], 0, backUp1.length);
         }
     }
 
@@ -274,8 +274,25 @@ public class Two048 {
     }
 
     public boolean noMoreMove() {
-        return arraysCompare(Board.actUp(backUp3), Board.actDown(backUp5))
-                && arraysCompare(Board.actLeft(backUp4), Board.actRight(backUp6));
+        return arraysCompare(Board.actUp(backUp3,true), Board.actDown(backUp5,true))
+                && arraysCompare(Board.actLeft(backUp4,true), Board.actRight(backUp6,true));
+    }
+
+    public Num[][] getBackUp(int num) {
+        switch (num) {
+            case 1:
+                return backUp1;
+            case 2:
+                return backUp2;
+            case 3:
+                return backUp3;
+            case 4:
+                return backUp4;
+            case 5:
+                return backUp5;
+            default:
+                return backUp6;
+        }
     }
 }
 

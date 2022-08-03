@@ -40,36 +40,41 @@ public class Panel extends JPanel implements ActionListener {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                two048.setBackUps(two048.getPlayBoard());
                 super.keyPressed(e);
                 int key = e.getKeyCode();
+                gameOver = two048.noMoreMove();
                 if (gameOver) {
                     showScore();
                 }
                 switch (key) {
                     case KeyEvent.VK_W:
-                        two048.operation(board, "w");
-                        repaint();
-                        gameOver = two048.noMoreMove();
-                        Board.printBoard(two048.getPlayBoard());
-                        System.out.println(Board.getScoreBoard().scoreList);
+                        if (!two048.arraysCompare(Board.actUp(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                            two048.operation(board, "w");
+                            repaint();
+                            gameOver = two048.noMoreMove();
+                        }
                         break;
                     case KeyEvent.VK_S:
-                        two048.operation(board, "s");
-                        repaint();
-                        gameOver = two048.noMoreMove();
-                        System.out.println(Board.getScoreBoard().scoreList);
+                        if (!two048.arraysCompare(Board.actDown(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                            two048.operation(board, "s");
+                            repaint();
+                            gameOver = two048.noMoreMove();
+                        }
                         break;
                     case KeyEvent.VK_A:
-                        two048.operation(board, "a");
-                        repaint();
-                        gameOver = two048.noMoreMove();
-                        System.out.println(Board.getScoreBoard().scoreList);
+                        if (!two048.arraysCompare(Board.actLeft(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                            two048.operation(board, "a");
+                            repaint();
+                            gameOver = two048.noMoreMove();
+                        }
                         break;
                     case KeyEvent.VK_D:
-                        two048.operation(board, "d");
-                        repaint();
-                        gameOver = two048.noMoreMove();
-                        System.out.println(Board.getScoreBoard().scoreList);
+                        if (!two048.arraysCompare(Board.actRight(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                            two048.operation(board, "d");
+                            repaint();
+                            gameOver = two048.noMoreMove();
+                        }
                         break;
                 }
             }
@@ -180,12 +185,12 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public void startGame() {
-        two048.generateNew();
-        two048.generateNext(board);
-        board = two048.generateNext(two048.generateNew());
-        Board.getScoreBoard().setNewScoreList();
-        System.out.println(Board.getScoreBoard().scoreList);
+        gameOver = false;
+        board = two048.generateNew();
+        board = two048.generateNext(board);
         repaint();
+        Board.getScoreBoard().setNewScoreList();
+
     }
 
     public void setMenuItems(JMenu mb1, JMenu mb2, JMenu mb3, JMenuItem m1, JMenuItem m2, JMenuItem m3,
@@ -218,7 +223,7 @@ public class Panel extends JPanel implements ActionListener {
         int count = 0;
         for (int n : Board.getScoreBoard().scoreList) {
             if (count != 0 && count != 1 && n != 0) {
-                scoreString += (int) Math.pow(2, count) + " : " + n / 8 + "\n";
+                scoreString += (int) Math.pow(2, count) + " : " + n + "\n";
             }
             count++;
         }
@@ -229,7 +234,7 @@ public class Panel extends JPanel implements ActionListener {
         int score = 0;
         int count = 0;
         for (int n : Board.getScoreBoard().scoreList) {
-            score += (int) Math.pow(2, count) * n / 8;
+            score += (int) Math.pow(2, count) * n;
             count++;
         }
         return score;

@@ -39,12 +39,12 @@ class Two048Test {
         Num num1 = new Num(2);
         Num num2 = new Num(2);
         Num num3 = new Num(4);
-        Assertions.assertEquals(0, b.merge(num1,num2,true).get(0).value);
-        Assertions.assertEquals(4, b.merge(num1,num2,true).get(1).value);
-        Assertions.assertEquals(0, b.revMerge(num1,num2,true).get(0).value);
-        Assertions.assertEquals(4, b.revMerge(num1,num2,true).get(1).value);
-        Assertions.assertEquals(2, b.merge(num1,num3,true).get(0).value);
-        Assertions.assertEquals(4, b.merge(num1,num3,true).get(1).value);
+        Assertions.assertEquals(0, b.merge(num1,num2,false).get(0).value);
+        Assertions.assertEquals(4, b.merge(num1,num2,false).get(1).value);
+        Assertions.assertEquals(0, b.revMerge(num1,num2,false).get(0).value);
+        Assertions.assertEquals(4, b.revMerge(num1,num2,false).get(1).value);
+        Assertions.assertEquals(2, b.merge(num1,num3,false).get(0).value);
+        Assertions.assertEquals(4, b.merge(num1,num3,false).get(1).value);
         Assertions.assertEquals(4, b.revMerge(num1,num3,false).get(0).value);
         Assertions.assertEquals(2, b.revMerge(num1,num3,false).get(1).value);
     }
@@ -59,19 +59,19 @@ class Two048Test {
     }
     @Test
             public void TestAction(){
-        Assertions.assertEquals(4, Board.actUp(TestBoard2)[0][3].value);
-        Assertions.assertEquals(4, Board.actLeft(TestBoard3)[3][0].value);
-        Assertions.assertEquals(8, Board.actDown(TestBoard2)[3][3].value);
-        Assertions.assertEquals(8, Board.actRight(TestBoard3)[3][3].value);
-        Assertions.assertEquals(256, Board.actRight(TestBoard4)[3][3].value);
+        Assertions.assertEquals(4, Board.actUp(TestBoard2,false)[0][3].value);
+        Assertions.assertEquals(4, Board.actLeft(TestBoard3,false)[3][0].value);
+        Assertions.assertEquals(8, Board.actDown(TestBoard2,false)[3][3].value);
+        Assertions.assertEquals(8, Board.actRight(TestBoard3,false)[3][3].value);
+        Assertions.assertEquals(256, Board.actRight(TestBoard4,false)[3][3].value);
     }
 
     @Test
     public void TestScoreBoard(){
 
         ScoreBoard scoreBoard = new ScoreBoard();
-        scoreBoard.addScore(2,true);
-        scoreBoard.addScore(4,true);
+        scoreBoard.addScore(2,false);
+        scoreBoard.addScore(4,false);
         Assertions.assertEquals(1,scoreBoard.getScoreList().get(2));
         Assertions.assertEquals(1,scoreBoard.getScoreList().get(3));
         scoreBoard.printScoreBoard();
