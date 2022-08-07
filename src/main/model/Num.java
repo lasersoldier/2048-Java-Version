@@ -41,7 +41,7 @@ public class Num {
         }
     }
 
-    private int calculatePos() {
+    public int calculatePos() {
         int length = 0;
         switch (String.valueOf(this.value).length()) {
             case 1:
@@ -66,7 +66,7 @@ public class Num {
     //I'm using suppress warning here because of the various cases for each number
     //and the rgb value for color is not linear
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    private Color changeColor() {
+    public Color changeColor() {
         Color color = null;
         switch (this.value) {
             case 2:

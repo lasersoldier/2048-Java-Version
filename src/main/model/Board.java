@@ -65,7 +65,7 @@ public class Board {
         if (Math.abs(b.value - a.value) != 0) {
             return new ArrayList<Num>(Arrays.asList(b, a));
         } else {
-            if (a.value != 0 || a.value != 0) {
+            if (a.value != 0 || b.value != 0) {
                 scoreBoard.addScore(b.value,backUp);
             }
             return new ArrayList<Num>(Arrays.asList(new Num(0), new Num(a.value * 2)));
