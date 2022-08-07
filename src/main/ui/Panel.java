@@ -20,6 +20,7 @@ public class Panel extends JPanel implements ActionListener {
     private Num[][] board = two048.generateNext(two048.generateNew());
     private boolean gameOver = false;
 
+    // Initialize the game panel
     public Panel(JFrame frame) throws Exception {
 
         this.setLayout(null);
@@ -36,6 +37,7 @@ public class Panel extends JPanel implements ActionListener {
 
     //I'm using suppress warning because it's the core operator for the user input in GUI
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // The method that receives user input and execute the corresponding code
     private void createOperator() {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
@@ -83,6 +85,8 @@ public class Panel extends JPanel implements ActionListener {
 
     }
 
+    // Create the menu of the game including creating new game, saving and loading the game, exiting the game,
+    // getting the tutorial and getting the current score board.
     private void menu() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu1 = new JMenu("Game");
@@ -105,12 +109,14 @@ public class Panel extends JPanel implements ActionListener {
         frame.setJMenuBar(menuBar);
     }
 
+    // create a Font
     private Font createFont() {
         return new Font("Times New Roman", Font.BOLD, 20);
     }
 
     // I'm using suppress warning because it contains all action for the menu bar.
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // Writing the corresponding command for the menu items
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -148,6 +154,7 @@ public class Panel extends JPanel implements ActionListener {
         }
     }
 
+    // The code demonstrating the score board when the user gets one or when the game end
     private void showScore() {
         if (!gameOver) {
             JOptionPane.showMessageDialog(null, "Your current score is : "
@@ -160,6 +167,7 @@ public class Panel extends JPanel implements ActionListener {
         }
     }
 
+    // Paint the board and current blocks
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
@@ -167,6 +175,7 @@ public class Panel extends JPanel implements ActionListener {
         drawScore(graphics);
     }
 
+    // Paint the live score of the player on the top of the user interface
     private void drawScore(Graphics graphics) {
         graphics.setColor(new Color(224, 168, 115));
         graphics.fillRoundRect(20, 22, 140, 40, 0, 0);
@@ -175,6 +184,7 @@ public class Panel extends JPanel implements ActionListener {
         graphics.drawString("Score : " + produceScore(), 30, 50);
     }
 
+    // Draw the board of the game
     private void drawBlock(Graphics graphics) {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
@@ -184,6 +194,7 @@ public class Panel extends JPanel implements ActionListener {
         }
     }
 
+    // Start a new game function
     public void startGame() {
         gameOver = false;
         board = two048.generateNew();
@@ -193,6 +204,7 @@ public class Panel extends JPanel implements ActionListener {
 
     }
 
+    // Initialize the menu items in the menu
     public void setMenuItems(JMenu mb1, JMenu mb2, JMenu mb3, JMenuItem m1, JMenuItem m2, JMenuItem m3,
                              JMenuItem m4, JMenuItem m5, JMenuItem m6) {
         mb1.setFont(createFont());
@@ -218,6 +230,7 @@ public class Panel extends JPanel implements ActionListener {
         m6.setActionCommand("check score");
     }
 
+    // Produce the string that shows the blocks that the user successfully merged
     public String produceScoreString() {
         String scoreString = "\nThe blocks you merged :\n";
         int count = 0;
@@ -230,6 +243,7 @@ public class Panel extends JPanel implements ActionListener {
         return scoreString;
     }
 
+    // produce the calculated score string that the user gets so far
     public int produceScore() {
         int score = 0;
         int count = 0;
