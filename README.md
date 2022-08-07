@@ -21,3 +21,15 @@ score list to a file for future loading.
 In my application, the realization of multiple Xs to a Y happens when the user is playing the game, multiple blocks that
 the user successfully merged will be added to a list where each element in Y correspond to the number of different
 blocks.
+
+# Instructions for Grader
+- You can generate the first required event by playing my game. When you successfully merge some blocks, they will be 
+added to the score board. Your blocks will be added to a score list.
+- You can generate the second required event by continuing playing my game until you successfully merge several next 
+blocks. Your blocks will be added to a score list.
+- You can locate my visual component by directly clicking on the *Score List* in *Check Score* menu bar or you can see 
+it through your score on the top-left of your screen since the score is calculated through the *Score List* as well.
+- You can save the state of my application by pressing *Game* in the menu bar and then find *Save Game* button to save 
+the current progress, both the board and the *Score List*.
+- You can reload the state of my application by pressing *Game* in the menu bar and then find *Load Game* button to load
+the last saved game.
