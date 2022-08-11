@@ -72,7 +72,7 @@ Thu Aug 11 03:10:07 PDT 2022
 You have successfully merged a 8 and added it to your score list.
 
 # Phase 4: Task 3
-There are variables I named like op, oneMore, which are not specific or clear enough.
+- There are variables I named like op, oneMore, which are not specific or clear enough.
 Because I named them for my own convenience. I can refactor them to operator and needOneMoreMove instead.
 
-Also, the Num class can be refactored to Number of course for clarity.
+- Also, the Num class can be refactored to Number of course for clarity.
