@@ -21,6 +21,8 @@ public class ScoreBoard {
         int original = scoreList.get((int) var);
         if (!backUp) {
             original += 1;
+            EventLog.getInstance().logEvent(new Event("You have successfully merged a " + score * 2
+                    + " and added it to your score list."));
         }
         scoreList.set((int) var, original);
 

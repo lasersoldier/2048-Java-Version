@@ -33,3 +33,46 @@ it through your score on the top-left of your screen since the score is calculat
 the current progress, both the board and the *Score List*.
 - You can reload the state of my application by pressing *Game* in the menu bar and then find *Load Game* button to load
 the last saved game.
+
+
+# Phase 4: Task 2
+You can get the log by pressing *Log* in the menu bar *Check Score* and also it will be printed
+out if you press *Exit Game* in the menu bar *Game*.
+
+Here is a sample of the log:
+
+Thu Aug 11 03:10:06 PDT 2022
+You have successfully merged a 8 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 4 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 8 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 4 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 16 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 8 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 8 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 16 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 32 and added it to your score list.
+
+Thu Aug 11 03:10:07 PDT 2022
+You have successfully merged a 8 and added it to your score list.
+
+# Phase 4: Task 3
+There are variables I named like op, oneMore, which are not specific or clear enough.
+Because I named them for my own convenience. I can refactor them to operator and needOneMoreMove instead.
+
+Also, the Num class can be refactored to Number of course for clarity.

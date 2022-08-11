@@ -9,6 +9,5 @@ public class Main {
         Panel panel = new Panel(gui);
         gui.add(panel);
         gui.setVisible(true);
-        new Two048();
     }
 }

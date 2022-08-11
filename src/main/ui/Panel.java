@@ -1,12 +1,11 @@
 package ui;
 
-import jdk.nashorn.internal.scripts.JO;
 import model.Board;
+import model.Event;
+import model.EventLog;
 import model.Num;
-import model.ScoreBoard;
 
 import javax.swing.*;
-import javax.xml.bind.annotation.XmlType;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,28 +50,28 @@ public class Panel extends JPanel implements ActionListener {
                 }
                 switch (key) {
                     case KeyEvent.VK_W:
-                        if (!two048.arraysCompare(Board.actUp(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                        if (!two048.arraysCompare(Board.actUp(two048.getBackUp(1), true), two048.getBackUp(2))) {
                             two048.operation(board, "w");
                             repaint();
                             gameOver = two048.noMoreMove();
                         }
                         break;
                     case KeyEvent.VK_S:
-                        if (!two048.arraysCompare(Board.actDown(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                        if (!two048.arraysCompare(Board.actDown(two048.getBackUp(1), true), two048.getBackUp(2))) {
                             two048.operation(board, "s");
                             repaint();
                             gameOver = two048.noMoreMove();
                         }
                         break;
                     case KeyEvent.VK_A:
-                        if (!two048.arraysCompare(Board.actLeft(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                        if (!two048.arraysCompare(Board.actLeft(two048.getBackUp(1), true), two048.getBackUp(2))) {
                             two048.operation(board, "a");
                             repaint();
                             gameOver = two048.noMoreMove();
                         }
                         break;
                     case KeyEvent.VK_D:
-                        if (!two048.arraysCompare(Board.actRight(two048.getBackUp(1),true), two048.getBackUp(2))) {
+                        if (!two048.arraysCompare(Board.actRight(two048.getBackUp(1), true), two048.getBackUp(2))) {
                             two048.operation(board, "d");
                             repaint();
                             gameOver = two048.noMoreMove();
@@ -103,8 +102,9 @@ public class Panel extends JPanel implements ActionListener {
         JMenuItem menuItem4 = new JMenuItem("Exit Game");
         JMenuItem menuItem5 = new JMenuItem("Tutorial");
         JMenuItem menuItem6 = new JMenuItem("Score List");
+        JMenuItem menuItem7 = new JMenuItem("Log");
 
-        setMenuItems(menu1, menu2, menu3, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6);
+        setMenuItems(menu1, menu2, menu3, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7);
 
         frame.setJMenuBar(menuBar);
     }
@@ -141,6 +141,11 @@ public class Panel extends JPanel implements ActionListener {
                     "Warning", JOptionPane.YES_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (option == 0) {
+                String logString = "";
+                for (Event event : EventLog.getInstance()) {
+                    logString += event.toString() + "\n" + "\n";
+                }
+                System.out.println(logString);
                 System.exit(0);
             }
         }
@@ -152,6 +157,27 @@ public class Panel extends JPanel implements ActionListener {
         if (command.equals("check score")) {
             showScore();
         }
+        if (command.equals("log")) {
+            JFrame log = new JFrame("Log");
+            log.setVisible(true);
+            log.setSize(480, 400);
+            showLog(log);
+        }
+    }
+
+    private void showLog(JFrame frame) {
+        String logString = "";
+        frame.setLayout(null);
+        JTextArea jta = new JTextArea();
+        JScrollPane jsp = new JScrollPane(jta);
+        jsp.setBounds(13, 10, 420, 340);
+        jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jta.setEditable(false);
+        for (Event e : EventLog.getInstance()) {
+            logString += e.toString() + "\n" + "\n";
+        }
+        jta.setText(logString);
+        frame.add(jsp);
     }
 
     // The code demonstrating the score board when the user gets one or when the game end
@@ -206,28 +232,28 @@ public class Panel extends JPanel implements ActionListener {
 
     // Initialize the menu items in the menu
     public void setMenuItems(JMenu mb1, JMenu mb2, JMenu mb3, JMenuItem m1, JMenuItem m2, JMenuItem m3,
-                             JMenuItem m4, JMenuItem m5, JMenuItem m6) {
-        mb1.setFont(createFont());
-        mb2.setFont(createFont());
-        mb3.setFont(createFont());
+                             JMenuItem m4, JMenuItem m5, JMenuItem m6, JMenuItem m7) {
         mb1.add(m1);
         mb1.add(m2);
         mb1.add(m3);
         mb1.add(m4);
         mb2.add(m5);
         mb3.add(m6);
+        mb3.add(m7);
         m1.addActionListener(this);
         m2.addActionListener(this);
         m3.addActionListener(this);
         m4.addActionListener(this);
         m5.addActionListener(this);
         m6.addActionListener(this);
+        m7.addActionListener(this);
         m1.setActionCommand("start");
         m2.setActionCommand("save");
         m3.setActionCommand("load");
         m4.setActionCommand("exit");
         m5.setActionCommand("tutorial");
         m6.setActionCommand("check score");
+        m7.setActionCommand("log");
     }
 
     // Produce the string that shows the blocks that the user successfully merged
